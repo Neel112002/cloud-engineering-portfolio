@@ -16,12 +16,15 @@ The site is served over **HTTPS** using CloudFront’s default certificate (no c
 
 ---
 
-## 🧱 Architecture
+## Architecture
 
 ```mermaid
 graph TD
-    U[User Browser] -->|HTTPS| CF[Amazon CloudFront<br/>Distribution]
-    CF -->|HTTP| S3[S3 Static Website<br/>Public Bucket]
+    U[User Browser] -->|HTTPS Request| CF[CloudFront CDN]
+    CF -->|Cache Miss| S3[S3 Static Website]
+    S3 --> CF
+    CF --> U[Return Cached Response]
+
 
     subgraph AWS
       CF
