@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Neel Shah – Cloud Static Site Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      :root {
+        --bg: #020617;
+        --card: #0b1120;
+        --accent: #38bdf8;
+        --accent-soft: rgba(56, 189, 248, 0.2);
+        --text: #e5e7eb;
+        --muted: #9ca3af;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: radial-gradient(circle at top, #0f172a 0, var(--bg) 55%);
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 960px;
+        background: linear-gradient(135deg, #020617, #020617 40%, #0f172a);
+        border-radius: 20px;
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        box-shadow: 0 24px 60px rgba(15, 23, 42, 0.9);
+        padding: 28px 28px 20px;
+      }
+
+      @media (min-width: 768px) {
+        .card {
+          padding: 32px 36px 26px;
+        }
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 4px 12px;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.9);
+        border: 1px solid var(--accent-soft);
+        color: var(--accent);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 12px;
+      }
+
+      .pill-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--accent);
+        box-shadow: 0 0 0 6px rgba(56, 189, 248, 0.35);
+      }
+
+      h1 {
+        font-size: clamp(26px, 4vw, 32px);
+        margin: 0 0 8px;
+      }
+
+      .subtitle {
+        margin: 0 0 24px;
+        color: var(--muted);
+        max-width: 680px;
+        line-height: 1.5;
+        font-size: 14px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+        gap: 24px;
+      }
+
+      @media (max-width: 768px) {
+        .grid {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+
+      .section-title {
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+
+      .badge-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 14px;
+        font-size: 11px;
+      }
+
+      .badge {
+        padding: 4px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.5);
+        background: rgba(15, 23, 42, 0.8);
+        color: var(--muted);
+      }
+
+      ul {
+        padding-left: 18px;
+        margin: 0 0 18px;
+        font-size: 14px;
+        color: var(--muted);
+      }
+
+      li + li {
+        margin-top: 6px;
+      }
+
+      .diagram {
+        border-radius: 16px;
+        border: 1px solid rgba(148, 163, 184, 0.5);
+        background: radial-gradient(circle at top left, #0f172a, #020617);
+        padding: 14px 14px 12px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .diagram-title {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: var(--accent);
+        margin-bottom: 8px;
+      }
+
+      .diagram-box {
+        border-radius: 10px;
+        border: 1px solid rgba(148, 163, 184, 0.5);
+        padding: 8px 10px;
+        margin-bottom: 6px;
+        background: rgba(15, 23, 42, 0.9);
+      }
+
+      .diagram-box span {
+        font-weight: 500;
+        color: var(--text);
+      }
+
+      .footer {
+        margin-top: 12px;
+        padding-top: 10px;
+        border-top: 1px solid rgba(15, 23, 42, 0.9);
+        font-size: 11px;
+        color: #6b7280;
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .link {
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      .link:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <div class="pill">
+        <span class="pill-dot"></span>
+        <span>Cloud Portfolio • Project 01</span>
+      </div>
+
+      <h1>AWS Static Website – S3 + CloudFront (IaC with Terraform)</h1>
+      <p class="subtitle">
+        Deployed a globally available static website using Amazon S3 for storage
+        and Amazon CloudFront as a CDN, fully provisioned with Terraform and
+        secured with HTTPS using the default CloudFront certificate.
+      </p>
+
+      <div class="grid">
+        <!-- LEFT: description -->
+        <section>
+          <div class="section-title">What this project shows</div>
+          <div class="badge-row">
+            <span class="badge">Amazon S3 Website Hosting</span>
+            <span class="badge">Amazon CloudFront CDN</span>
+            <span class="badge">Terraform (IaC)</span>
+            <span class="badge">HTTPS by default</span>
+          </div>
+
+          <ul>
+            <li>
+              Infrastructure defined as code: S3 bucket, website configuration,
+              public-read policy, and CloudFront distribution are all created
+              via Terraform.
+            </li>
+            <li>
+              CloudFront serves content over HTTPS with global edge locations,
+              improving latency and security.
+            </li>
+            <li>
+              Simple, low-cost architecture suitable for portfolios, landing
+              pages, or documentation sites.
+            </li>
+          </ul>
+
+          <div class="section-title">Tech stack</div>
+          <ul>
+            <li>AWS: S3, CloudFront</li>
+            <li>Infrastructure as Code: Terraform</li>
+            <li>Language: HTML / CSS (no framework)</li>
+            <li>Region: ca-central-1 (Canada)</li>
+          </ul>
+        </section>
+
+        <!-- RIGHT: architecture diagram style panel -->
+        <aside class="diagram">
+          <div class="diagram-title">Request flow</div>
+
+          <div class="diagram-box">
+            <span>1. Browser</span> → User visits the CloudFront URL
+            (<code>https://&lt;distribution&gt;.cloudfront.net</code>).
+          </div>
+
+          <div class="diagram-box">
+            <span>2. CloudFront (CDN)</span> → Terminates HTTPS, caches static
+            assets, and forwards cache misses to the S3 website endpoint.
+          </div>
+
+          <div class="diagram-box">
+            <span>3. S3 Static Website</span> → Hosts <code>index.html</code>
+            and <code>404.html</code> objects and returns responses.
+          </div>
+
+          <div class="diagram-box">
+            <span>4. Terraform</span> → Manages all infrastructure lifecycle:
+            <code>init</code>, <code>apply</code>, and <code>destroy</code>.
+          </div>
+        </aside>
+      </div>
+
+      <div class="footer">
+        <span>Built by Neel Shah · Cloud Engineering Track</span>
+        <span>
+          Repo coming soon —
+          <a class="link" href="#" onclick="alert('Replace with GitHub URL');"
+            >view on GitHub</a
+          >
+        </span>
+      </div>
+    </main>
+  </body>
+</html>
