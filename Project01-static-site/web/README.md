@@ -32,7 +32,8 @@ graph TD
     end
 
 ```markdown
-## ⚙️ Infrastructure Details (Terraform)
+
+##  Infrastructure Details (Terraform)
 
 **Main resources:**
 
