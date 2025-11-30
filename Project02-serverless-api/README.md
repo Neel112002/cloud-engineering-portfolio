@@ -13,16 +13,22 @@ Feedback Endpoint:
 
 POST /feedback
 
-📌 Project Overview
+📌## 📌 Project Overview
 
-This backend service is designed to integrate seamlessly with a static website (Project 01). Users submit feedback, which gets processed by a Lambda function and stored in DynamoDB. All AWS resources (Lambda, API Gateway, DynamoDB, IAM) are automatically provisioned using Terraform.
+This backend service integrates with my static website (Project 01).  
+Users submit feedback, which triggers a Lambda function that writes data into DynamoDB.  
+All infrastructure (Lambda, DynamoDB, IAM, API Gateway) is deployed using Terraform.
 
-🧩 Architecture Diagram
+---
+
+## 🏗️ Architecture Diagram
+
+```mermaid
 flowchart TD
-    A[Static Website<br/>Project 01] -->|POST /feedback| B[API Gateway<br/>HTTP API]
-    B --> C[Lambda Function<br/>Python Handler]
-    C --> D[DynamoDB<br/>project02-feedback Table]
-    C --> E[CloudWatch Logs<br/>Monitoring]
+    A[Static Website<br>(Project 01)] -->|POST /feedback| B(API Gateway<br>HTTP API)
+    B --> C(Lambda Function<br>Python Handler)
+    C --> D(DynamoDB Table<br>project02-feedback)
+    C --> E(CloudWatch Logs<br>Monitoring)
 
 🔄 Request Flow
 
