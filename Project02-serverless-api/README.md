@@ -1,23 +1,33 @@
-Project 02 — Serverless Feedback API (API Gateway + Lambda + DynamoDB + Terraform)
+# Project 02 — Serverless Feedback API  
+(API Gateway + Lambda + DynamoDB + Terraform)
 
-This project implements a fully serverless backend API for collecting website feedback. It is part of my Cloud Engineering Portfolio, demonstrating serverless design, API development, event-driven architecture, and Infrastructure as Code using Terraform.
+This project implements a fully serverless backend API for collecting website feedback.  
+It is part of my Cloud Engineering Portfolio and demonstrates API development, event-driven architecture, and Infrastructure as Code using Terraform.
 
-🌐 Live API Endpoint
+---
 
-Base Invoke URL:
+## 🌐 Live API Endpoint
 
-https://<api-id>.execute-api.ca-central-1.amazonaws.com
+**Base Invoke URL:**  
+https://<your-api-id>.execute-api.ca-central-1.amazonaws.com
 
+markdown
+Copy code
 
-Feedback Endpoint:
-
+**Feedback Endpoint:**  
 POST /feedback
 
-📌## 📌 Project Overview
+yaml
+Copy code
+
+---
+
+## 📌 Project Overview
 
 This backend service integrates with my static website (Project 01).  
-Users submit feedback, which triggers a Lambda function that writes data into DynamoDB.  
-All infrastructure (Lambda, DynamoDB, IAM, API Gateway) is deployed using Terraform.
+When a user submits a feedback form, the data is processed by a Lambda function and stored in DynamoDB.
+
+All resources (Lambda, API Gateway, DynamoDB, IAM) are provisioned automatically using Terraform.
 
 ---
 
@@ -25,109 +35,86 @@ All infrastructure (Lambda, DynamoDB, IAM, API Gateway) is deployed using Terraf
 
 ```mermaid
 flowchart TD
-    A[Static Website<br>(Project 01)] -->|POST /feedback| B(API Gateway<br>HTTP API)
-    B --> C(Lambda Function<br>Python Handler)
-    C --> D(DynamoDB Table<br>project02-feedback)
-    C --> E(CloudWatch Logs<br>Monitoring)
-
+    A[Static Website\n(Project 01)] -->|POST /feedback| B(API Gateway\nHTTP API)
+    B --> C(Lambda Function\nPython Handler)
+    C --> D(DynamoDB Table\nproject02-feedback)
+    C --> E(CloudWatch Logs\nMonitoring)
 🔄 Request Flow
+User submits feedback from the website (Project 01).
 
-User submits feedback from Project 01 form.
+API Gateway receives the POST /feedback request.
 
-API Gateway receives POST /feedback.
+API Gateway triggers the Lambda function.
 
-API Gateway triggers Lambda (Python).
+Lambda parses JSON, assigns a UUID, and writes to DynamoDB.
 
-Lambda validates input and writes a new record to DynamoDB.
+Lambda returns a success message.
 
-Lambda returns JSON response (message, id).
-
-Browser displays success message.
+CloudWatch Logs capture execution details.
 
 🧰 Tech Stack
-Component	Technology	Purpose
-API Layer	Amazon API Gateway (HTTP API)	Exposes REST endpoint
-Compute	AWS Lambda (Python 3.12)	Handles feedback logic
-Storage	Amazon DynamoDB	Stores feedback messages
-IaC	Terraform	Infrastructure provisioning
-Monitoring	CloudWatch Logs	Lambda logs
-Region	ca-central-1	Canadian deployment
+Component	Technology
+Compute	AWS Lambda (Python 3.12)
+API Layer	API Gateway (HTTP API)
+Database	DynamoDB (On-Demand PAY_PER_REQUEST)
+IaC	Terraform
+Logging	CloudWatch Logs
+Region	ca-central-1
+
 📂 Project Structure
+python
+Copy code
 Project02-serverless-api/
-├── infra/
-│   ├── main.tf        # Terraform: API Gateway, Lambda, DynamoDB, IAM
-│   └── lambda.zip     # Packaged Lambda function
-└── src/
-    └── app.py         # Python Lambda handler
+│── infra/
+│   ├── main.tf          # Terraform for Lambda, API Gateway, DynamoDB, IAM
+│   ├── lambda.zip       # Packaged Lambda code
+│   └── app.py           # Python Lambda handler
+│
+└── README.md
+🗂️ DynamoDB Schema
+Attribute	Type	Description
+id	String (PK)	Auto-generated UUID
+name	String	User name
+email	String	User email
+message	String	Feedback message
 
-📝 Lambda Function Behavior
+📬 Example API Request (Testing)
+bash
+Copy code
+curl -X POST "https://<api-id>.execute-api.ca-central-1.amazonaws.com/feedback" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Neel",
+    "email": "neel@example.com",
+    "message": "This is test feedback"
+  }'
+Expected Response:
 
-Parses JSON request body
-
-Validates fields: name, email, message
-
-Generates UUID (id)
-
-Writes item to DynamoDB
-
-Returns JSON response:
-
+json
+Copy code
 {
   "message": "Feedback saved",
-  "id": "uuid-value"
+  "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 }
+🚀 Deployment Summary
+terraform init — initialize providers
 
-🗄️ DynamoDB Record Example
-{
-  "id": "d9f9bca2-1dd5-4c0c-9ec4-6494fb036ad2",
-  "name": "Neel",
-  "email": "neel@example.com",
-  "message": "Testing feedback",
-  "created_at": "2025-11-29T22:14:00Z"
-}
+terraform apply — deploy all resources
 
-🌐 Integration With Project 01 (Frontend)
+terraform destroy — remove resources
 
-The static site uses:
+Everything is deployed using repeatable Infrastructure as Code.
 
-fetch(FEEDBACK_API_URL, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(payload)
-})
+🧠 Key Skills Demonstrated
+Building serverless backends
 
+Designing event-driven systems
 
-The browser form directly sends requests to this API, creating a full frontend → backend → database workflow.
+Implementing least-privilege IAM roles
 
-💰 Cost & Free Tier
-Service	Usage	Cost
-Lambda	Free-tier (1M requests/month)	$0
-API Gateway HTTP API	Very low traffic	$0
-DynamoDB	Pay-per-request	~$0
-CloudWatch Logs	Minimal usage	Free-tier
+Writing Lambda functions in Python
 
-Total cost: $0 (portfolio demonstration).
+Provisioning AWS resources via Terraform
 
-🧠 Skills Demonstrated
+Integrating frontend static sites with backend APIs
 
-Serverless architecture design
-
-API Gateway + Lambda integration
-
-DynamoDB table design (single primary key)
-
-IAM least-privilege policy setup
-
-Terraform-based provisioning
-
-CORS configuration
-
-Packaging and deploying Lambda functions
-
-Observability via CloudWatch
-
-Integration with static frontend
-
-🏁 Summary
-
-Project 02 delivers a real, production-style serverless backend powering the feedback form of the static site (Project 01). It demonstrates strong cloud engineering foundations with AWS serverless services and IaC.
