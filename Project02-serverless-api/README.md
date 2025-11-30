@@ -19,7 +19,7 @@ When users submit feedback from the frontend form, the API receives the request,
 
 All AWS resources—API Gateway, Lambda, DynamoDB, IAM roles—are automatically deployed using Terraform.
 
-## 🏗️ Architecture Diagram
+## 🏗 Architecture Diagram
 
 ```mermaid
 flowchart TD
