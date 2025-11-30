@@ -180,6 +180,74 @@
       .link:hover {
         text-decoration: underline;
       }
+
+      /* Feedback form styling */
+      #feedback {
+        margin-top: 28px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(148, 163, 184, 0.4);
+      }
+
+      #feedback h2 {
+        margin: 0 0 10px;
+        font-size: 18px;
+      }
+
+      #feedback p {
+        margin: 0 0 16px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      #feedback-form {
+        display: grid;
+        gap: 12px;
+        max-width: 480px;
+      }
+
+      #feedback-form label {
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      #feedback-form input,
+      #feedback-form textarea {
+        width: 100%;
+        padding: 8px 10px;
+        border-radius: 8px;
+        border: 1px solid rgba(148, 163, 184, 0.5);
+        background: rgba(15, 23, 42, 0.8);
+        color: var(--text);
+        font-size: 13px;
+        outline: none;
+      }
+
+      #feedback-form input:focus,
+      #feedback-form textarea:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.3);
+      }
+
+      #feedback-form button {
+        border: none;
+        border-radius: 999px;
+        padding: 8px 18px;
+        font-size: 13px;
+        cursor: pointer;
+        background: var(--accent);
+        color: #020617;
+        font-weight: 600;
+        width: fit-content;
+      }
+
+      #feedback-form button:hover {
+        filter: brightness(1.05);
+      }
+
+      #feedback-status {
+        font-size: 12px;
+        margin-top: 4px;
+      }
     </style>
   </head>
   <body>
@@ -258,6 +326,38 @@
         </aside>
       </div>
 
+      <!-- Feedback section -->
+      <section id="feedback">
+        <h2>Send Feedback (Serverless API)</h2>
+        <p>
+          This form calls a serverless backend (API Gateway + Lambda + DynamoDB)
+          deployed as <strong>Project 02</strong> of my cloud portfolio.
+        </p>
+
+        <form id="feedback-form">
+          <div>
+            <label for="name">Name</label><br />
+            <input id="name" name="name" type="text" required />
+          </div>
+          <div>
+            <label for="email">Email</label><br />
+            <input id="email" name="email" type="email" required />
+          </div>
+          <div>
+            <label for="message">Message</label><br />
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              required
+            ></textarea>
+          </div>
+          <button type="submit">Send feedback</button>
+        </form>
+
+        <p id="feedback-status"></p>
+      </section>
+
       <div class="footer">
         <span>Built by Neel Shah · Cloud Engineering Track</span>
         <span>
@@ -268,5 +368,50 @@
         </span>
       </div>
     </main>
+
+    <script>
+      // ⚠️ Replace this with your actual API URL if it ever changes
+      const FEEDBACK_API_URL =
+        "https://bvbea790n7.execute-api.ca-central-1.amazonaws.com/feedback";
+
+      const form = document.getElementById("feedback-form");
+      const statusEl = document.getElementById("feedback-status");
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        statusEl.textContent = "Sending...";
+        statusEl.style.color = "#9ca3af";
+
+        const payload = {
+          name: document.getElementById("name").value,
+          email: document.getElementById("email").value,
+          message: document.getElementById("message").value,
+        };
+
+        try {
+          const res = await fetch(FEEDBACK_API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+
+          const data = await res.json();
+
+          if (!res.ok) {
+            statusEl.textContent = data.message || "Something went wrong.";
+            statusEl.style.color = "salmon";
+            return;
+          }
+
+          statusEl.textContent = "Feedback sent! ID: " + data.id;
+          statusEl.style.color = "#4ade80"; // green
+          form.reset();
+        } catch (err) {
+          console.error(err);
+          statusEl.textContent = "Network error, please try again.";
+          statusEl.style.color = "salmon";
+        }
+      });
+    </script>
   </body>
 </html>
