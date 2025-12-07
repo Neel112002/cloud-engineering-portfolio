@@ -83,6 +83,14 @@
         font-size: 14px;
       }
 
+      .section-subtitle {
+        margin: 0 0 18px;
+        color: var(--muted);
+        max-width: 720px;
+        line-height: 1.5;
+        font-size: 13px;
+      }
+
       .grid {
         display: grid;
         grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
@@ -161,7 +169,7 @@
       }
 
       .footer {
-        margin-top: 12px;
+        margin-top: 18px;
         padding-top: 10px;
         border-top: 1px solid rgba(15, 23, 42, 0.9);
         font-size: 11px;
@@ -181,10 +189,30 @@
         text-decoration: underline;
       }
 
+      /* Generic project section wrapper */
+      .project-section {
+        margin-top: 28px;
+        padding-top: 22px;
+        border-top: 1px solid rgba(148, 163, 184, 0.35);
+      }
+
+      .project-section h2 {
+        margin: 0 0 8px;
+        font-size: 18px;
+      }
+
+      .project-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: var(--muted);
+        margin-bottom: 4px;
+      }
+
       /* Feedback form styling */
       #feedback {
         margin-top: 28px;
-        padding-top: 20px;
+        padding-top: 22px;
         border-top: 1px solid rgba(148, 163, 184, 0.4);
       }
 
@@ -252,6 +280,7 @@
   </head>
   <body>
     <main class="card">
+      <!-- PROJECT 01 -------------------------------------------------------- -->
       <div class="pill">
         <span class="pill-dot"></span>
         <span>Cloud Portfolio • Project 01</span>
@@ -326,9 +355,10 @@
         </aside>
       </div>
 
-      <!-- Feedback section -->
+      <!-- PROJECT 02 – FEEDBACK FORM -------------------------------------- -->
       <section id="feedback">
-        <h2>Send Feedback (Serverless API)</h2>
+        <div class="project-label">Project 02 — Serverless Feedback API</div>
+        <h2>Send Feedback (API Gateway + Lambda + DynamoDB)</h2>
         <p>
           This form calls a serverless backend (API Gateway + Lambda + DynamoDB)
           deployed as <strong>Project 02</strong> of my cloud portfolio.
@@ -358,6 +388,158 @@
         <p id="feedback-status"></p>
       </section>
 
+      <!-- PROJECT 03 – BILLING DASHBOARD ----------------------------------- -->
+      <section class="project-section" id="project03">
+        <div class="project-label">Project 03 — Billing & Cost Monitoring</div>
+        <h2>AWS Billing Dashboard & Budget Alerts</h2>
+        <p class="section-subtitle">
+          This project focuses on monitoring AWS costs using the built-in
+          Billing & Cost Management tools. I created reusable Cost Explorer
+          reports and budget alerts to track monthly spend and avoid surprises
+          while staying inside the Free Tier.
+        </p>
+
+        <div class="grid">
+          <div>
+            <div class="section-title">What this project shows</div>
+            <div class="badge-row">
+              <span class="badge">AWS Billing &amp; Cost Management</span>
+              <span class="badge">Cost Explorer Reports</span>
+              <span class="badge">AWS Budgets</span>
+              <span class="badge">Email Alerts</span>
+            </div>
+
+            <ul>
+              <li>
+                Created a <strong>“AWS Monthly Billing Overview”</strong> Cost
+                Explorer report to see total monthly costs, grouped by service,
+                across the last 6 months.
+              </li>
+              <li>
+                Added a <strong>“Daily Spend (Last 14 Days)”</strong> report to
+                quickly spot any unusual jumps in daily AWS usage.
+              </li>
+              <li>
+                Configured an <strong>AWS Budget</strong> with thresholds (for
+                example, 50% and 100% of the monthly budget) that send email
+                alerts.
+              </li>
+              <li>
+                Verified that portfolio resources (S3, CloudFront, EC2, Lambda)
+                remain aligned with the <strong>Free Tier</strong> wherever
+                possible.
+              </li>
+            </ul>
+
+            <div class="section-title">Tech stack</div>
+            <ul>
+              <li>AWS Billing &amp; Cost Management console</li>
+              <li>AWS Cost Explorer (saved reports)</li>
+              <li>AWS Budgets (email notifications)</li>
+              <li>Region: ca-central-1 (Canada)</li>
+            </ul>
+          </div>
+
+          <aside class="diagram">
+            <div class="diagram-title">Monitoring flow</div>
+
+            <div class="diagram-box">
+              <span>1. Cost Explorer</span> → Saved reports visualize monthly
+              and daily AWS spend by service.
+            </div>
+            <div class="diagram-box">
+              <span>2. Budget</span> → Watches actual and forecasted costs
+              against a monthly limit (for example, <code>$10</code>).
+            </div>
+            <div class="diagram-box">
+              <span>3. Alerts</span> → When thresholds are crossed, AWS sends
+              notification emails to my account.
+            </div>
+            <div class="diagram-box">
+              <span>4. Action</span> → If needed, I can shut down or right-size
+              resources (EC2, volumes, etc.) to stay on budget.
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- PROJECT 04 – EC2 + NGINX ---------------------------------------- -->
+      <section class="project-section" id="project04">
+        <div class="project-label">Project 04 — EC2 Web Server in a VPC</div>
+        <h2>Amazon EC2 + Nginx (Public Web Server)</h2>
+        <p class="section-subtitle">
+          Here I re-hosted the portfolio site from Project 01 on an
+          <strong>Amazon EC2</strong> instance running <strong>Nginx</strong>
+          inside a custom VPC. This demonstrates the classic “VM + web server”
+          pattern with proper networking and secure access via Systems Manager.
+        </p>
+
+        <div class="grid">
+          <div>
+            <div class="section-title">What this project shows</div>
+            <div class="badge-row">
+              <span class="badge">Amazon EC2</span>
+              <span class="badge">Nginx Web Server</span>
+              <span class="badge">Custom VPC + Subnet</span>
+              <span class="badge">Security Groups</span>
+              <span class="badge">SSM Session Manager</span>
+            </div>
+
+            <ul>
+              <li>
+                Launched an <strong>Amazon Linux 2</strong> EC2
+                <code>t2.micro</code> instance in a public subnet of my own VPC.
+              </li>
+              <li>
+                Attached a security group allowing <strong>HTTP (TCP/80)</strong>
+                from the internet, with admin access handled via
+                <strong>Session Manager</strong>.
+              </li>
+              <li>
+                Installed and configured <strong>Nginx</strong> to serve the
+                portfolio <code>index.html</code> from
+                <code>/usr/share/nginx/html</code>.
+              </li>
+              <li>
+                Verified that visiting the instance’s public IP returns the same
+                portfolio content as the S3 + CloudFront site.
+              </li>
+            </ul>
+
+            <div class="section-title">Tech stack</div>
+            <ul>
+              <li>AWS: EC2, VPC, Subnets, Route Tables, Internet Gateway</li>
+              <li>Compute: Amazon Linux 2, Nginx</li>
+              <li>Access: AWS Systems Manager Session Manager</li>
+              <li>Region: ca-central-1 (Canada)</li>
+            </ul>
+          </div>
+
+          <aside class="diagram">
+            <div class="diagram-title">Network &amp; request flow</div>
+
+            <div class="diagram-box">
+              <span>1. Browser → EC2</span> → User visits
+              <code>http://&lt;ec2-public-ip&gt;</code>.
+            </div>
+            <div class="diagram-box">
+              <span>2. Security Group</span> → Inbound rule allows
+              <code>TCP/80</code> from the internet; other ports are restricted.
+            </div>
+            <div class="diagram-box">
+              <span>3. VPC Public Subnet</span> → Route table sends
+              <code>0.0.0.0/0</code> to the Internet Gateway so the instance is
+              reachable.
+            </div>
+            <div class="diagram-box">
+              <span>4. Nginx on EC2</span> → Nginx serves the static portfolio
+              files and returns responses to the client.
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- FOOTER ----------------------------------------------------------- -->
       <div class="footer">
         <span>Built by Neel Shah · Cloud Engineering Track</span>
         <span>
