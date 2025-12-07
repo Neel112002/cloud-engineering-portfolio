@@ -1,15 +1,15 @@
-# Project 02 — Serverless Feedback API  
+# Project 02 — Serverless Feedback API
+
 (API Gateway + Lambda + DynamoDB + Terraform)
 
-This project implements a fully serverless backend API for collecting website feedback.  
+This project implements a fully serverless backend API for collecting website feedback.
 It is part of my Cloud Engineering Portfolio and demonstrates API development, event-driven architecture, and Infrastructure as Code using Terraform.
-
----
 
 ## 🌐 Live API Endpoint
 
-**Base Invoke URL:**  
-```text
+**Base Invoke URL:**
+
+```
 https://<your-api-id>.execute-api.ca-central-1.amazonaws.com
 
 ## 📌 Project Overview
@@ -95,3 +95,4 @@ curl -X POST "$API_URL/feedback" \
 - Infrastructure as Code with Terraform
 - Connecting backend APIs with a static website frontend
 
+```
