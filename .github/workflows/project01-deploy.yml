@@ -1,0 +1,40 @@
+name: Deploy Project01 Static Site to S3 + CloudFront
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "Project01-static-site/**"
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: ca-central-1
+      S3_BUCKET: neel-cloud-engineering-portfolio-site
+      CLOUDFRONT_DISTRIBUTION_ID: EH9SJWIM1GAE
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::584108278233:role/github-actions-static-site-deploy
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Sync Project01 files to S3
+        run: |
+          aws s3 sync Project01-static-site/ s3://$S3_BUCKET --delete
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id $CLOUDFRONT_DISTRIBUTION_ID \
+            --paths "/*"
