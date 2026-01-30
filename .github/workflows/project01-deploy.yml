@@ -27,4 +27,4 @@ jobs:
 
       - name: Deploy to S3
         run: |
-          aws s3 sync Project01-static-site s3://YOUR_BUCKET_NAME --delete
+          aws s3 sync Project01-static-site s3://neel-cloud-engineering-portfolio-project01 --delete
