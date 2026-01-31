@@ -1,4 +1,4 @@
-name: Deploy Project01 to S3
+name: Deploy Project01 to S3 + CloudFront
 
 on:
   push:
@@ -19,13 +19,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Configure AWS credentials
+      - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: us-east-1
 
-      - name: Deploy to S3
+      - name: Sync Project01 files to S3
         run: |
           aws s3 sync Project01-static-site s3://neel-cloud-engineering-portfolio-project01 --delete
 
