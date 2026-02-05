@@ -1,4 +1,4 @@
-name: Deploy Project01 to S3 + CloudFront
+name: Deploy Project01 Static Site to S3 + CloudFront
 
 on:
   push:
