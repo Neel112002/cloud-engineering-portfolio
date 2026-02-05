@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - "Project01-static-site/**"
+  workflow_dispatch:
+
 
 permissions:
   id-token: write
