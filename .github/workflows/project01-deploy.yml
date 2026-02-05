@@ -1,4 +1,4 @@
-name: Project01 – Workflow Sanity Check
+name: Deploy Project01 Static Site to S3 + CloudFront
 
 on:
   push:
@@ -9,6 +9,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  id-token: write
   contents: read
 
 jobs:
@@ -16,13 +17,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Verify runner & files
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::584108278233:role/github-actions-project01-deploy
+          aws-region: us-east-1
+
+      - name: Sync site to S3
         run: |
-          echo "✅ GitHub Actions is running correctly"
-          echo "📂 Listing repository files:"
-          ls -la
-          echo "📂 Listing Project01-static-site:"
-          ls -la Project01-static-site || echo "Folder not found"
+          aws s3 sync Project01-static-site s3://neel-cloud-engineering-portfolio-project01 --delete
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id E19LHMXP03G7EQ \
+            --paths "/*"
