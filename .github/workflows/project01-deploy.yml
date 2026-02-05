@@ -1,4 +1,4 @@
-name: Deploy Project01 to S3 and CloudFront
+name: Deploy Project01 to S3 + CloudFront
 
 on:
   push:
@@ -22,15 +22,15 @@ jobs:
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-to-assume: arn:aws:iam::584108278233:role/github-actions-static-site-deploy
           aws-region: us-east-1
 
-      - name: Sync files to S3
+      - name: Sync Project01 files to S3
         run: |
-          aws s3 sync Project01-static-site s3://neel-cloud-engineering-portfolio-project01 --delete
+          aws s3 sync Project01-static-site/ s3://neel-cloud-engineering-portfolio-project01 --delete
 
       - name: Invalidate CloudFront cache
         run: |
           aws cloudfront create-invalidation \
-            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --distribution-id E19LHMXP03G7EQ \
             --paths "/*"
