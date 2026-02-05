@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Configure AWS credentials (OIDC)
@@ -25,9 +25,9 @@ jobs:
           role-to-assume: arn:aws:iam::584108278233:role/github-actions-static-site-deploy
           aws-region: us-east-1
 
-      - name: Sync Project01 files to S3
+      - name: Sync site to S3
         run: |
-          aws s3 sync Project01-static-site/ s3://neel-cloud-engineering-portfolio-project01 --delete
+          aws s3 sync Project01-static-site s3://neel-cloud-engineering-portfolio-project01 --delete
 
       - name: Invalidate CloudFront cache
         run: |
